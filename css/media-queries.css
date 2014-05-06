@@ -144,6 +144,18 @@
         display: none;
     } 
 
+    .tagline {
+        margin:0 !important;
+        text-align: right;
+    }
+
+}
+
+@media (min-width: 992px) {
+
+    .tagline{
+        margin:0;
+    }
 }
 
 @media (min-width: 768px) and (max-width:990px) {
@@ -214,7 +226,7 @@
 
     .jumbotron--title {
         font-size: 40px;
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
     .jumbotron--sub-title {
@@ -448,7 +460,6 @@
 
     .footer ul li {
         display: block;
-        text-align: left;
     }
 
     .portfolio--list li.col-12 {
@@ -469,19 +480,16 @@
 @media (max-width:557px) {
 
     .footer .col-12 {
-        text-align: left;
+        text-align: center;
     }
 
     .footer ul.col-12 {
-        width: 50%;
-        text-align: left;
-        float: left;
+        text-align: center;
         margin-bottom: 30px;
     }
 
     .footer ul li {
         display: block;
-        text-align: left;
     } 
 
     .project .portfolio--feature__main {
