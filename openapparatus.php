@@ -25,7 +25,7 @@
               <h6 class="blog-post-sub-title">Going into this project I had little (and I'm talking LITTLE) experience with HTML and CSS.  I wanted to gain experience in Javascript and specifically Angular so I didn't fidle much with backend code, although I learned a bit of Node.js.
               <br>
               <br>
-              Although I did do the design of the site, I wouldn't necessarily it was one of my "design porfolio" pieces.  I was mainly focused on functionality of adding users, tracking, and displaying their information. 
+              Although I did do the design of the site, I wouldn't necessarily say it was one of my "design porfolio" pieces.  I was mainly focused on functionality of adding users, tracking, and displaying their information. 
               <br>
               <br>
               </h6>
