@@ -6,41 +6,42 @@
       <p class="jumbotron--sub-title"><span class="icon-emo-grin"></span></p>
     </div><!-- /masthead -->
         <!-- portfolio list -->
-        <div class="container">
-
-          <div class="row">
-
-            <ul class="list-unstyled  portfolio--list  cs-style-3">
-              <!-- work item 1 -->
-              <li class="col-sm-6  col-md-4  col-lg-4">
-                <figure class="box  box--sm  text-center">
-                    <img src="img/portfolio-1.jpg" class="img-responsive" alt="portfolio image 1" />
-                    <figcaption>
-                      <p>Open Apparatus</p>
-                      <a href="openapparatus.php" class="green  pull-right">View</a>
-                    </figcaption>
-                </figure>
-              </li><!-- /work item 1 -->
-              <!-- work item 2 -->
-              <li class="col-sm-6  col-md-4  col-lg-4">
-                <figure class="box  box--sm  text-center">
-                    <img src="img/portfolio-2.jpg" class="img-responsive" alt="portfolio image 2" />
-                    <figcaption>
-                      <p>Txtwire</p>
-                      <a href="txtwire.php" class="green  pull-right">View</a>
-                    </figcaption>
-                </figure>
-              </li><!-- /work item 2 -->
-              <!-- work item 3 -->
-              <li class="col-sm-6  col-md-4  col-lg-4">
-                <figure class="box  box--sm  text-center">
-                    <img src="img/portfolio-3.jpg" class="img-responsive" alt="portfolio image 3" />
-                    <figcaption>
-                      <p>Right Intel</p>
-                      <a href="rightintel.php" class="green  pull-right">View</a>
-                    </figcaption>
-                </figure>
-              </li><!-- /work item 3 -->
+        <div id='work'>
+          <div class="container">
+            <h2> my work </h2>
+            <div class="row">
+              <ul class="list-unstyled  portfolio--list  cs-style-3">
+                <!-- work item 1 -->
+                <li class="col-sm-6  col-md-4  col-lg-4">
+                  <figure class="box  box--sm  text-center">
+                      <img src="img/portfolio-1.jpg" class="img-responsive" alt="portfolio image 1" />
+                      <figcaption>
+                        <p>Open Apparatus</p>
+                        <a href="openapparatus.php" class="green  pull-right">View</a>
+                      </figcaption>
+                  </figure>
+                </li><!-- /work item 1 -->
+                <!-- work item 2 -->
+                <li class="col-sm-6  col-md-4  col-lg-4">
+                  <figure class="box  box--sm  text-center">
+                      <img src="img/portfolio-2.jpg" class="img-responsive" alt="portfolio image 2" />
+                      <figcaption>
+                        <p>Txtwire</p>
+                        <a href="txtwire.php" class="green  pull-right">View</a>
+                      </figcaption>
+                  </figure>
+                </li><!-- /work item 2 -->
+                <!-- work item 3 -->
+                <li class="col-sm-6  col-md-4  col-lg-4">
+                  <figure class="box  box--sm  text-center">
+                      <img src="img/portfolio-3.jpg" class="img-responsive" alt="portfolio image 3" />
+                      <figcaption>
+                        <p>Right Intel</p>
+                        <a href="rightintel.php" class="green  pull-right">View</a>
+                      </figcaption>
+                  </figure>
+                </li><!-- /work item 3 -->
+            </div>
           </div>
         </div><!-- /portfolio list -->
 
