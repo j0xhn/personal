@@ -2,8 +2,8 @@
     <!-- masthead -->
     <div class="jumbotron">
       <h2 class="jumbotron--title">Twiz</h2>
-      <p class="jumbotron--sub-title">Objective C <span class="icon-star"></span> Parse <span class="icon-star"></span> Design</p>
-      <a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=907314308&mt=8" class="btn  btn--green">View Site</a>
+      <p class="jumbotron--sub-title">Parse <span class="icon-star"></span> Objective C  <span class="icon-star"></span> Design</p>
+      <a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=907314308&mt=8" class="btn  btn--green">Download</a>
     </div><!-- /masthead -->
 
         <!-- main-content -->
@@ -17,71 +17,134 @@
               <!-- blog post -->
               <img src="img/TwizBig.png" class="blog-main-img  img-responsive" alt="blog main image" />
 
-              <h4 class="blog-post-title">User Platform in Angular</h4>  
+              <h4 class="blog-post-title">Twitter Quiz = Twiz</h4>  
                 <ul class="list-unstyled  tags  blog-tags">
                   <li><a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=907314308&mt=8">Download</a></li>
                 </ul>
-              <h6 class="blog-post-sub-title">Going into this project I had little (and I'm talking LITTLE) experience with HTML and CSS.  I wanted to gain experience in Javascript and specifically Angular so I didn't fidle much with backend code, although I learned a bit of Node.js.
+              <h6 class="blog-post-sub-title">I built this app for App Raptors (a client) while attending Dev Mountain.  It gets your twitter feed and quizes you on who said what rewarding points for correct answers.  Even though I personally believe Javascript will devour the world and the world wide web... it doesn't hurt to put a little understanding of native enviorments in your toolbelt right? 
               <br>
               <br>
-              Although I did do the design of the site, I wouldn't necessarily it was one of my "design porfolio" pieces.  I was mainly focused on functionality of adding users, tracking, and displaying their information. 
+              I did it all.  From design to development, this was my baby.  I didn't handle authentication of users or create my own database and api -- big shout out to Parse for that stuff -- but I did get to learn quite a bit about the exciting world of native iOS.
               <br>
               <br>
               </h6>
 
               <blockquote>
-                "Shows that I can learn new technologies and skills rapidly.  Learned completely new tools and systems with a little in-class instruction, and a whole lot of outside of class experimenting. Loved it. "
-                <small>John D. Storey (me)</small>
+                "any application that can be written in JavaScript, will eventually be written in JavaScript"
+                <small>Atwood's Law</small>
               </blockquote>
 
-              <h6 class="blog-post-sub-title">Libraries/Technologies include Angular, Firebase, jQuery, completely custom CSS and HTML, here is a little sample:</h6>
+              <h6 class="blog-post-sub-title">Wanted to mention I haven't touched an iPhone app since graduating. Mentors were great in helping me pass roadblocks, but like the quote above, I just think the web based API and Javascript are going to be more usefull to me over time.  That being said and I worked extensively with the Parse and Twitter API while including my own game logic in a way that the user can just keep playing seemelessly without ever thinking twice.  KEEP IN MIND: This was my first iPhone app, still relatively new to development.  I don't profess this to be clean or awesome code... but it did work :)</h6>
 
 <pre>
-//////VIEW//////
+////// GAME LOGIC + TWITTER API//////
 
-&lt;!-- TAG BOX--&gt;
-  &lt;div class='tagBox'&gt;
-    &lt;span&gt;Other Tags&nbsp;&lt;/span&gt;&lt;i&gt;(click to vote up)&lt;/i&gt;:&nbsp; 
-    &lt;p ng-repeat="tag in selectedPerson.votes | object2Array | orderBy:'value':true" ng-click='upVote(tag.tagName, selectedPerson, userID)'&gt;
-    {{ tag.tagName }},&nbsp;
-    &lt;/p&gt;
-&lt;!-- INPUT TAG --&gt;
-    &lt;form ng-submit="tagCreate(tagFromView, selectedPerson, userID)" id='tagCreateForm'&gt;
-      &lt;input class='tagName' type='text' name='tagFromView' placeholder='Create new tag' ng-model="tagFromView"&gt;
-      &lt;button type='submit'class='btn btn-xs tagBtns' id='submitBtnMinimal'&gt;create&lt;/button&gt;
-    &lt;/form&gt;
-  &lt;/div&gt;
+- (void) loadTweetBucketDictionaryWithCompletion:(void (^)(bool success))block{ //requests timeline in the background
 
-//////CONTROLLER//////
-
-$scope.upVote = function (tagName, selectedPerson, userID, $filter) {
-    console.log('You clicked for up vote');
-    if (userID){
-        if(selectedPerson.votes[tagName][userID]){
-            // tell them they can't vote
-            if ( selectedPerson.votes[tagName][userID].type === 1){
-                alert('you already voted on this');
-            } else {
-                selectedPerson.votes[tagName][userID].type=1;
-                selectedPerson.votes[tagName].value++;
-            }
-        } else {
-            //create the userId for this tagName
-            selectedPerson.lastVote = new Date();
-            selectedPerson.votes[tagName][userID] = {type:1};
-            selectedPerson.votes[tagName].value++;
-        }
-        //rewards user for engagment 
-        people[userID].overallVotes.value++;
-    } else {
-        peopleService.loginPrompt();
+    NSString *bodyString = @"";
+    if (!self.currentUser){ // if user stops using app, then re-opens app it erases self.currentUser, this sets it.
+        self.currentUser = [[NSUserDefaults standardUserDefaults] objectForKey:CURRENT_USER_KEY];
     }
+    if (!self.lastTweetID) {
+        bodyString = [NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/home_timeline.json?screen_name=%@&count=100", self.currentUser];
+    } else {
+        bodyString = [NSString stringWithFormat:@"https://api.twitter.com/1.1/statuses/home_timeline.json?screen_name=%@&count=100&since_id=%@", self.currentUser, self.lastTweetID];
+    }
+    
+    NSURL *url = [NSURL URLWithString:bodyString];
+    NSMutableURLRequest *tweetRequest = [NSMutableURLRequest requestWithURL:url];
+    [[PFTwitterUtils twitter] signRequest:tweetRequest];
+   
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:tweetRequest queue:queue completionHandler:^()
+     {
+         if (error) { // error for when you exeed your limit
+             NSLog(@"error %@", error);
+             if (block) { // if passes "nil" then this ensures it doesn't throw an error
+                 block(NO);
+             }
+         }
+         else if ([data length] >1)
+         {
+             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONWritingPrettyPrinted error:&error];
+             
+             for(id key in json){
+                 
+                 // for active tweet dictionary
+                 NSNumber *singleTweetID = [key objectForKey:@"id"];
+                 NSString *singleTweetText = [key objectForKey:@"text"];
+                 NSString *singleTweetAuthorID = [[key objectForKey:@"user"]objectForKey:@"screen_name"];
+                 NSNumber *defaultPoints = [NSNumber numberWithInteger:-1];
+                 
+                 NSURL *singleTweetimageURL = [NSURL URLWithString:[[key objectForKey:@"user"] objectForKey:@"profile_image_url_https"]];
+                 
+                 NSDictionary *singleTweet = @{tweetTextKey:singleTweetText,tweetAuthorIDKey:singleTweetAuthorID,tweetIDKey:singleTweetID,
+                 tweetPhotoURLKey: 
+                 singleTweetimageURL};
+                
+                 
+                 // sets possibleAnswerBucketArray to unique answers
+                 if (!self.possibleAnswerBucketArray) { // on initial load creates a new possible Answer bucket array
+                     self.possibleAnswerBucketArray = [NSMutableArray new];
+                 }
+                 NSString *query = [NSString stringWithFormat:@"%@ = %%@", possibleAnswerAuthorKey];
+                 NSPredicate *pred = [NSPredicate predicateWithFormat:query,singleTweetAuthorID];
+                 NSArray *filteredArray = [self.possibleAnswerBucketArray filteredArrayUsingPredicate:pred];
+                 if (filteredArray.count == 0) {
+                     NSDictionary *possibleAnswer = @{possibleAnswerAuthorKey:singleTweetAuthorID,
+                                                      possibleAnswerPhotoURLKey: singleTweetimageURL,
+                                                      tweetPointsKey:defaultPoints};
+                     [self.possibleAnswerBucketArray addObject:possibleAnswer];
+                 }
+                 
+                 if (!self.tweetBucketDictionary) { // for the initial load, if no dictionary it creates one
+                     self.tweetBucketDictionary = [NSMutableDictionary new];
+                 }
+                 [self.tweetBucketDictionary setValue:singleTweet forKey:[NSString stringWithFormat:@"%@",singleTweetID]];
+             }
+             
+             if (self.InitialLoadState) {
+                 self.InitialLoadState = NO; // turns off auto ask
+             }
+
+             NSLog(@"tweet bucket finished Loading");
+             if (self.possibleAnswerBucketArray < 4) { // checks to see if there are atleast 4 possible answers
+                 UIAlertView *infiniteLoopAlert = [[UIAlertView alloc]
+                                                   initWithTitle:@"Whoops! Lets try this again"
+                                                   message:@"Something went wrong under the hood.  Usually it's because you didn't have at least 4 new tweets to create your quiz with, so close the app and wait a couple of minutes then try again"
+                                                   delegate:self
+                                                   cancelButtonTitle:@"Thanks!"
+                                                   otherButtonTitles:nil];
+                 [infiniteLoopAlert show];
+             }
+
+             if (block) { // if passes "nil" then this ensures it doesn't throw an error
+                 block(YES);
+             }
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+             NSLog(@"Nothing was downloaded.");
+             if (block) { // if passes "nil" then this ensures it doesn't throw an error
+                 block(NO);
+             }
+         }
+         else if (error != nil){
+             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                      message:@"Something went wrong, check your internet connection then try again"
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles:nil];
+             [errorAlertView show];
+             NSLog(@"Error = %@", error);
+             if (block) { // if passes "nil" then this ensures it doesn't throw an error
+                 block(NO);
+             }
+         }
+     }];
 }
 </pre>
-
-            <p>
-              Basically I learned alot about how to pass parameters, how to interact with Firebase, and how to manipulate values inside of javascript objects.
-            </p>
 
             </div><!-- /left content -->
 
@@ -94,12 +157,11 @@ $scope.upVote = function (tagName, selectedPerson, userID, $filter) {
 
                   <ul class="list-unstyled  tags  category-tags">
                     <li><a>Coded while at Dev Mountain</a></li>
-                    <li><a>Facebook Login</a></li>
-                    <li><a>Editable settings for Bio, Website, etc..</a></li>
-                    <li><a>Custom Filters for AngularJS</a></li>
-                    <li><a>3 way binding with Firebase</a></li>
-                    <li><a>Custom CSS animations with Key Frames</a></li>
-                    <li><a>Designed Logo :)</a></li>
+                    <li><a>Twitter Login</a></li>
+                    <li><a>Endured Apple Certificate Headaches</a></li>
+                    <li><a>Game Logic</a></li>
+                    <li><a>Design</a></li>
+                    <li><a>Animations</a></li>
                   </ul>
 
               </div><!-- /right content -->
