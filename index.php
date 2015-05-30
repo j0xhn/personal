@@ -41,6 +41,16 @@
                       </figcaption>
                   </figure>
                 </li><!-- /work item 3 -->
+                <!-- work item 4 -->
+                <li class="col-sm-6  col-md-4  col-lg-4">
+                  <figure class="box  box--sm  text-center">
+                      <img src="img/portfolio-4.jpg" class="img-responsive" alt="portfolio image 4" />
+                      <figcaption>
+                        <p>iOS App | Twiz</p>
+                        <a href="twiz.php" class="green  pull-right">View</a>
+                      </figcaption>
+                  </figure>
+                </li><!-- /work item 3 -->
             </div>
           </div>
         </div><!-- /portfolio list -->

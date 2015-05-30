@@ -38,7 +38,7 @@
               	We had a super high bounce rate on our landing page.  We came up with a competing design and using google analytics ran A/B split tests.  The page with a video had a much better engagement rate so we started making videos for our different segments.
               </h6> 
               <h6 class="blog-post-sub-title">
-              Sadly, they didn't have any developers assigned soley to front-end development and almost all of my initiateves related to implementing dashboard improvements were put on hold to focus on user stories to improve service to their higher revenue customers.  I was still able to provide value by setting up event/goal tracking on our site along with re-marketing campaigns such as AdRoll, but results are not definite.  The designs you see here have not been implemented into production code yet.   
+              Sadly, they didn't have any developers assigned soley to front-end development and almost all of my initiatives related to implementing dashboard improvements were put on hold to focus on user stories to improve service to their higher revenue customers.  I was still able to provide value by setting up event/goal tracking on our site along with re-marketing campaigns such as AdRoll, but results are not definite.  The designs you see here have not been implemented into production code yet.   
               <br>
               <br>
               </h6>
